@@ -12,7 +12,10 @@ const Search = ({history}) => {
     return (
         <div className = 'Searcharea'>
         <Input size="lg" value = {keyword} onChange = {e=> setkeyword(e.target.value)} onKeyPress = {Handlesearch} bgColor  = 'white' placeholder="Tap For Search" />
-        </div>
+         <Input size="lg" value = {keyword} onChange = {e=> setkeyword(e.target.value)} onKeyPress = {Handlesearch} bgColor  = 'white' placeholder="Tap For Search" />
+       
+     
+     </div>
     )
 }
  
