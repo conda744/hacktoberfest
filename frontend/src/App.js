@@ -24,6 +24,7 @@ import Products from './pages/products/products'
 import Editproduct from './pages/Editproduct/Editproduct'
 import Orders from './pages/Orders/Orders'
 import Orders from './pages/Users'
+import NotFound from './components/Notfound'
 
 
  const App = () => { 
@@ -66,6 +67,7 @@ import Orders from './pages/Users'
                  <Route path="/admin/orderlist" component={Orders}/>
                  <Route path="/search/:keyword" component={Shop}/>
                   <Route path="/user" component={Users}/>
+                   <Route path="/notfound" component={notfound}/>
 
                  <Route path="/admin/user/:id/edit" component={Edituser}/>
                  <Route path="/admin/product/:id/edit" component={Editproduct}/>
