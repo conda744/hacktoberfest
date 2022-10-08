@@ -16,6 +16,8 @@ const Searchnav = ({history}) => {
         <InputGroup >
         <Input value = {keyword} onChange = {e=> setkeyword(e.target.value)} bgColor='white' placeholder='Search here ...'  onKeyPress = {Handlesearch} ></Input>
         <InputRightElement children={ <MdSearch/>} />
+             <Input value = {keyword} onChange = {e=> setkeyword(e.target.value)} bgColor='white' placeholder='Search here ...'  onKeyPress = {Handlesearch} ></Input>
+        
         </InputGroup>
 
 
