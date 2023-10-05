@@ -66,6 +66,7 @@ import NotFound from './components/Notfound'
                  <Route path="/admin/productlist" component={Products}/>
                  <Route path="/admin/orderlist" component={Orders}/>
                  <Route path="/search/:keyword" component={Shop}/>
+                 <Route path="/get_plus/:keyword" component={Plus}/>
                   <Route path="/user" component={Users}/>
                    <Route path="/notfound" component={notfound}/>
 
