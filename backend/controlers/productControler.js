@@ -67,13 +67,13 @@ const getProducts = asyncHandler(async (req, res) => {
 // @access Public
 const getProductById = asyncHandler(async (req, res) => {
     const product =  await Product.findById(req.params.id)
-    if(product){
-        res.json(product)
-    } else{
+    if(!product){
         // status it's 500 by default cuz of errHandler
         res.status(404)
         throw new Error('Product not found')
     }
+    
+    res.json(product)
 })
 
 // @desc Delete a product
@@ -81,14 +81,14 @@ const getProductById = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const deleteProduct = asyncHandler(async (req, res) => {
     const product =  await Product.findById(req.params.id)
-    if(product){
-        await product.remove()
-        res.json({message : 'Product Removed'})
-    } else{
+    if(!product){
         // status it's 500 by default cuz of errHandler
         res.status(404)
         throw new Error('Product not found')
     }
+    
+    await product.remove()
+    res.json({message : 'Product Removed'})
 })
 
 // @desc Create a product
@@ -119,22 +119,21 @@ const updateProduct = asyncHandler(async (req, res) => {
     const {name,price,description,category,sizes,Images,countInStock} = req.body
     console.log(name,price,Images)
     const product = await Product.findById(req.params.id)
-    if(product){
-        product.name = name
-        product.price = price
-        product.description = description
-        product.category = category
-        product.sizes = sizes
-        product.images = Images
-        product.countInStock = countInStock 
-    const updatedProduct = await product.save();
-    console.log(updatedProduct)
-    res.json(updateProduct)
-
-    }else{
+    if(!product) {
         res.status(404)
         throw new Error('Product Not found')
     }
+    
+    product.name = name
+    product.price = price
+    product.description = description
+    product.category = category
+    product.sizes = sizes
+    product.images = Images
+    product.countInStock = countInStock 
+    const updatedProduct = await product.save();
+    console.log(updatedProduct)
+    res.json(updateProduct)
 })
 
 // @desc Create new Review
@@ -143,28 +142,28 @@ const updateProduct = asyncHandler(async (req, res) => {
 const createproductreview = asyncHandler(async (req, res) => {
     const {rating,comment} = req.body
     const product = await Product.findById(req.params.id)
-    if(product){
-        const alreadyReviewed = product.reviews.find(r => r.user.toString() === req.user._id.toString()) 
-        if(alreadyReviewed){
-            res.status(404)
-            throw new Error('Product Already Review')
-
-        }
-        const review = {
-            name : req.user.name,
-            rating : Number(rating),
-            comment,
-            user : req.user._id
-        }
-        product.reviews.push(review)
-        product.numReviews = product.reviews.length
-        product.rating =product.reviews.reduce((acc,item)=> item.rating+acc,0)/product.reviews.length
-        await product.save()
-        res.status(201).json({message : 'Review added'})
-    }else{
+    if(!product) {
         res.status(404)
         throw new Error('Product Not found')
     }
+    
+    const alreadyReviewed = product.reviews.find(r => r.user.toString() === req.user._id.toString()) 
+    if(alreadyReviewed){
+        res.status(404)
+        throw new Error('Product Already Review')
+
+    }
+    const review = {
+        name : req.user.name,
+        rating : Number(rating),
+        comment,
+        user : req.user._id
+    }
+    product.reviews.push(review)
+    product.numReviews = product.reviews.length
+    product.rating =product.reviews.reduce((acc,item)=> item.rating+acc,0)/product.reviews.length
+    await product.save()
+    res.status(201).json({message : 'Review added'})
 })
 
 
